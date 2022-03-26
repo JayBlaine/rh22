@@ -1,31 +1,14 @@
-import sqlite3
-from flask import Flask, render_template
-from werkzeug.exceptions import abort
+from flask import render_template, url_for, flash, redirect, request
+from flask_login import login_user, current_user, logout_user, login_required
+#from rh22.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from rh22 import app, db, bcrypt
 
-app = Flask(__name__)
-
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    return conn
-
-def get_post(post_id):
-    conn = get_db_connection()
-    post = conn.execute('SELECT * FROM posts WHERE id = ?',
-                        (post_id,)).fetchone()
-    conn.close()
-    if post is None:
-        abort(404)
-    return post
 
 @app.route("/")
-def index():
-    conn = get_db_connection()
-    posts = conn.execute("SELECT * FROM posts").fetchall()
-    conn.close()
-    return render_template('index.html', posts=posts)
+def home():
+    return render_template('home.html')
 
-@app.route("/<int:post_id>")
-def post(post_id):
-    post = get_post(post_id)
-    return render_template('post.html', post=post)
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
