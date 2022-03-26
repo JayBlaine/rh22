@@ -1,5 +1,3 @@
-from pydoc import synopsis
-from statistics import mean
 import sys
 import pandas as pd
 
