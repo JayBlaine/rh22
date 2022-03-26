@@ -12,4 +12,4 @@ login_manager = LoginManager(rh22)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-from rh22 import routes
+#from rh22 import routes
