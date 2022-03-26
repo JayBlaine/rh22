@@ -19,13 +19,21 @@ def get_post(post_id):
     return post
 
 @app.route("/")
-def index():
-    conn = get_db_connection()
-    posts = conn.execute("SELECT * FROM posts").fetchall()
-    conn.close()
-    return render_template('index.html', posts=posts)
+def home():
+    # conn = get_db_connection()
+    # posts = conn.execute("SELECT * FROM posts").fetchall()
+    # global_recommendations =
+    # conn.close()
+    return render_template('home.html', global_recommendations=global_recommendations)
 
-@app.route("/<int:post_id>")
-def post(post_id):
-    post = get_post(post_id)
-    return render_template('post.html', post=post)
+@app.route("/<int:account_id>")
+def account(account_id):
+    account_info = get_account(account_id)
+    return render_template('account.html', account_info=account_info)
+
+@app.route("/about")
+def about():
+    return render_template('about.html')
+
+@app.route("/login")
+def
