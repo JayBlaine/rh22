@@ -1,8 +1,7 @@
 import sqlite3
 from flask import Flask, render_template
+from rh22 import app
 from werkzeug.exceptions import abort
-
-app = Flask(__name__)
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
@@ -10,6 +9,7 @@ def get_db_connection():
     return conn
 
 def get_account(account_id):
+    print('test')
     # conn = get_db_connection()
     # post = conn.execute('SELECT * FROM posts WHERE id = ?',
     #                     (post_id,)).fetchone()
@@ -20,6 +20,7 @@ def get_account(account_id):
     # return post
 
 def get_anime(anime_id):
+    print('test')
 
 
 @app.route("/")
@@ -29,7 +30,7 @@ def home():
     # global_recommendations =
     #
     # conn.close()
-    return render_template('home.html', global_recommendations=global_recommendations)
+    return render_template('home.html')#, global_recommendations=global_recommendations)
 
 @app.route("/about")
 def about():
