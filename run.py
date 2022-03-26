@@ -1,4 +1,4 @@
-from rh22 import rh22
+from rh22 import app
 
 if __name__ == '__main__':
-    rh22.run(debug=True)
+    app.run(debug=True)
