@@ -1,43 +1,25 @@
-import sqlite3
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import login_required, logout_user, login_user, current_user
 
 from rh22 import app, bcrypt, db
-from werkzeug.exceptions import abort
 
 from rh22.forms import UpdateAccountForm, LoginForm, RegistrationForm
 from rh22.models import User
 
 
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    return conn
-
-def get_account(account_id):
-    print('test')
-    # conn = get_db_connection()
-    # post = conn.execute('SELECT * FROM posts WHERE id = ?',
-    #                     (post_id,)).fetchone()
-    # account=
-    # conn.close()
-    # if post is None:
-    #     abort(404)
-    # return post
-
-def get_anime(anime_id):
-    print('test')
-
 
 @app.route("/")
+@app.route("/about")
 @app.route("/home")
 def home():
-    # conn = get_db_connection()
-    # posts = conn.execute("SELECT * FROM posts").fetchall()
-    # global_recommendations =
-    #
-    # conn.close()
     return render_template('home.html')#, global_recommendations=global_recommendations)
+
+@app.route("/start")
+def start():
+    if current_user.is_authenticated and len(current_user.history) == 0:
+        return redirect(url_for('discover'))
+    return render_template('start.html', title='Get Started')
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -69,10 +51,12 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
+
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -87,8 +71,7 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', image_file=image_file, form=form)
+    return render_template('account.html', title='Account', form=form)
 '''
 @app.route("/<int:anime_id>")
 def anime(anime_id):

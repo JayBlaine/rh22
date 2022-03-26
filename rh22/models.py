@@ -13,7 +13,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.VARCHAR(32), unique=True, nullable=False)
     email = db.Column(db.VARCHAR(32), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    image_file = db.Column(db.VARCHAR(100), nullable=False, default='default.jpg')
     history = db.Column(db.VARCHAR(1000))
 
     def __repr__(self):
