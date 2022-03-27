@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,71 +15,45 @@
     {% else %}
         <title>Anifind</title>
     {% endif %}
+
 </head>
 <body class="en" data-new-gr-c-s-check-loaded="14.1054.0" data-gr-ext-installed="">
 	<div id="wrap">
-
-
 <!-- header -->
 <div id="header">
 	<div class="header_inner">
-		<h1 class="logo"><a {{ url_for('home') }} class="btn_logo N=a:gnb.home,g:en_en">AniFind</a></h1>
-	<div class="sta">
-			<!-- [D] account management -->
-            {% if current_user.is_authenticated  %}
-		    <a href="{{ url_for('account') }}" class="lk_login" id="btnLogin">Account</a>
-		    {% else %}
-		    <a href="{{ url_for('login') }}" class="lk_publish N=a:gnb.publish,g:en_en" id="btnPublish">Log In</a>
-		    <a href="{{ url_for('register') }}" class="lk_login" id="btnLogin">Register</a>
-            {% endif %}
+		<h1 class="logo"><a href="{{ url_for('home') }}">AniFind</a></h1>
+        <div class="sta">
 
-		<span class="login N=a:gnb.mywebtoon,g:en_en" id="btnLoginInfo" style="display: none;"></span>
+<div>
+<div style="horiz-align: left">
 
-		<div class="ly_loginbox NE=a:log" id="layerMy">
-			<div class="ico_arr v4 up"></div>
-
-		</div>
-
-
-		<div class="search_area _searchArea NE=a:sch" style="display:none">
-			<span class="input_box"><input type="text" class="input_search _txtKeyword"></span>
-			<em class="search_dsc _searchDesc">Search by Series Title or Creator</em>
-			<span class="form_area _searchForm">
-
-						<em class="ico_search _icoSearch">Search</em>
-
-						<a href="#" class="btn_delete _btnDelete NPI=a:del,g:en_en" style="display: none;">Delete</a>
-						<em class="bar">|</em>
-						<a href="#" class="lk_close _btnClose NPI=a:cancel,g:en_en">Close</a>
-					</span>
-
-			<ul class="ly_autocomplete _searchLayer" style="display:none">
-			</ul>
-		</div>
-	</div>
-	<p class="blind">MENU</p>
-	<ul class="lnb NE=a:gnb">
-       {% if current_user.is_authenticated and current_user.history is string %}
-		<li class="m01 on">
-			<a href="{{ url_for('start') }}" class="NPI=a:daily,g:en_en">
-				<h>START</h>
-			</a>
-		</li>
+            <a class="lk_login" href="{{ url_for('home') }}">About</a>
+            {% if current_user.is_authenticated and current_user.history is string %}
+			<a href="{{ url_for('discover') }}" class="lk_login">Discover</a>
+        {% else %}
+			<a href="{{ url_for('start') }}" class="lk_login">Start</a>
         {% endif %}
-		<li class="m02">
-			<a href="{{ url_for('discover') }}" class="NPI=a:genre,g:en_en">
-				<h>DISCOVER</h>
-			</a>
-		</li>
-		<li class="m03">
-			<a href="{{ url_for('home') }}" class="NPI=a:toprated,g:en_en">
-				<h>ABOUT</h>
-			</a>
-		</li>
-	</ul>
-	<div id="appleid-signin" data-color="black" data-border="true" data-type="sign in" hidden=""></div>
+
+			<!-- [D] account management -->
+<div style="horiz-align: right">
+            {% if current_user.is_authenticated  %}
+		    <a href="{{ url_for('account') }}" class="lk_login">Account</a>
+            <a href="{{ url_for('logout') }}" class="lk_login">Logout</a>
+		    {% else %}
+		    <a href="{{ url_for('login') }}" class="lk_login">Log In</a>
+		    <a href="{{ url_for('register') }}" class="lk_login">Register</a>
+            {% endif %}
+</div>
+    </div>
+</div>
+	</div>
+
+        {% block content %}{% endblock %}
 </div>
 </div>
 <!-- //header -->
+        </div>
 </body>
+
 </html>
