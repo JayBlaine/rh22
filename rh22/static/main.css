@@ -4,8 +4,8 @@ body {
   margin-top: 5rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #444444;
+h1, h2, h3, h4, h5, h6, p1 {
+  color: #ffffff;
 }
 
 .bg-steel {
@@ -28,6 +28,11 @@ hr {
 
 p1 {
   font-size: 24px;
+  font-family: Verdana, sans-serif;
+}
+
+h3{
+  font-weight: bold;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -95,4 +100,13 @@ p1 {
 
 .button2:hover {
   color: green;
+}
+
+.content-dark{
+  background-color: black;
+  border: black;
+}
+
+.content-about{
+  padding-bottom: 20px;
 }
