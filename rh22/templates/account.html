@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form1.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Account Info</legend>
+                <div class="form-group">
+                    {{ form1.email.label(class="form-control-label") }}
+                    {% if form1.email.errors %}
+                        {{ form1.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form1.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form1.submit(class="btn btn-outline-info") }}
+            </div>
+            <div class="form-group">
+                {{ form2.reset(class="btn btn-outline-info") }}
+                 </div>
+            {% for item in history %}
+            <div>
+                <p>{{item[0]}} - {{item[1]}} &#9733</p>
+            </div>
+            {% endfor %}
+        </form>
+    </div>
+{% endblock content %}

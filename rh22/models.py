@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     history = db.Column(db.VARCHAR(1000))
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.id}')"
+        return f"User('{self.email}', '{self.id}')"
 
     def get_reset_token(self, time_slice=1800) -> str:
         s = Serializer(app.config['SECRET_KEY'], time_slice)

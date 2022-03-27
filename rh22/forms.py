@@ -41,6 +41,10 @@ class UpdateAccountForm(FlaskForm):
                     'That email is taken. Please choose a different one.')
 
 
+class ResetHistoryForm(FlaskForm):
+    reset = SubmitField('Reset')
+
+
 class RequestResetForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Send Email')
