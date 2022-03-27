@@ -27,7 +27,11 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">About</a>
-                <a class="nav-item nav-link" href="{{ url_for('start') }}">Get Started</a>
+                {% if current_user.is_authenticated and current_user.history is string %}
+                <a class="nav-item nav-link" href="{{ url_for('discover') }}">Discover</a>
+                {% else %}
+                <a class="nav-item nav-link" href="{{ url_for('start') }}">Get started</a>
+                {% endif %}
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">

@@ -3,7 +3,7 @@ from flask_login import login_required, logout_user, login_user, current_user
 from flask_mail import Message
 from rh22 import app, bcrypt, db, mail
 
-from rh22.forms import UpdateAccountForm, LoginForm, RegistrationForm, ResetPasswordForm, RequestResetForm
+from rh22.forms import UpdateAccountForm, LoginForm, RegistrationForm, ResetPasswordForm, RequestResetForm, ResetHistoryForm
 from rh22.models import User, Anime
 
 
@@ -12,12 +12,6 @@ from rh22.models import User, Anime
 @app.route("/home")
 def home():
     return render_template('home.html')#, global_recommendations=global_recommendations)
-
-@app.route("/start")
-def start():
-    if current_user.is_authenticated and current_user.history is None:
-        return redirect(url_for('discover'))
-    return render_template('start.html', title='Get Started')
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -60,20 +54,45 @@ def logout():
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
-    form = UpdateAccountForm()
-    if form.validate_on_submit():
-        current_user.email = form.email.data
+    form1 = UpdateAccountForm()
+    form2 = ResetHistoryForm()
+    if form1.validate_on_submit() and form1.submit.data:
+        current_user.email = form1.email.data
         db.session.commit()
         flash('Your account has been updated', 'success')
         return redirect(url_for('account'))
-    elif request.method == 'GET':
-        form.email.data = current_user.email
-    return render_template('account.html', title='Account', form=form)
+    if form2.validate_on_submit() and form2.reset.data:
+        current_user.history = None
+        db.session.commit()
+        flash('Your history has been cleared', 'success')
+        return redirect(url_for('account'))
+    if request.method == 'GET':
+        form1.email.data = current_user.email
+        history_dirty = current_user.history
+        history2 = []
+        if isinstance(history_dirty, str):  # tokenize history
+            history1 = history_dirty.split(',')
+            for i in history1:
+                history2.append(i.split('-'))
+    return render_template('account.html', title='Account', form1=form1, form2=form2, history=history2)
+
+
+@app.route("/start")
+def start():
+    if current_user.is_authenticated and isinstance(current_user.history, str):
+        return redirect(url_for('discover'))
+    return render_template('start.html', title='Get Started', methods=['GET', 'POST'])
+
+
+@app.route("/discover")
+def discover():
+    return render_template('discover.html', title='Discover', methods=['GET', 'POST'])
+
 
 @app.route("/discover/<int:mal_id>")
-def post(mal_id):
+def mal_page(mal_id):
     anime = Anime.query.get_or_404(mal_id)
-    return render_template('discover.html', title=post.title, post=post)
+    return render_template('discover.html', title=anime.title, anime=anime)
 
 def send_reset_email(user: User):
     token = user.get_reset_token()
