@@ -23,6 +23,29 @@ class User(db.Model, UserMixin):
         token = s.dumps({'user_id': self.id}).decode('utf-8')
         return token
 
+    def add_history(self, anime_id: int, rating: int) -> None:
+        # self.history = '3010-5'
+        # db.session.commit()
+        if not self.__contains__(anime_id):
+            self.history = f'{anime_id:5}-{rating:2},' + self.history
+            db.session.commit()
+        else:
+            raise ValueError(f"{anime_id} is already in User's history")
+
+    def get_history(self) -> list[dict[str: str]]:
+        history_list = self.history.split(',')
+        history = []
+        for history_item in history_list:
+            anime_id, rating = history_item.split('-')
+            history.append({anime_id: rating})
+        return history
+
+    def __contains__(self, item):
+        for items in self.get_history():
+            if str(item) in items.keys():
+                return True
+        return False
+
     @staticmethod
     def verify_reset_token(token: str):
         s = Serializer(app.config['SECRET_KEY'])

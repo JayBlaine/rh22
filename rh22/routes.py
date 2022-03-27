@@ -100,16 +100,18 @@ def start():
 
 @app.route("/discover", methods=['GET', 'POST'])
 def discover():
-    if request.method == 'POST':
-        # TODO: add to history
-        previous_rating = request.form['rating']
-        # TODO: get next anime ID from the surprise model
     anime_id = 48491
+    if request.method == 'POST':
+        # Add to user history
+        user = User.query.filter_by(email=current_user.email).first()
+        print(user.get_history())
+        previous_rating = request.form['rating']
+        user.add_history(anime_id, previous_rating)
+        # TODO: get next anime ID from the surprise model
     video_url = get_embedded_video_url(anime_id)
     anime = Anime(anime_id)
     anime_title = anime.title
     anime_synopsis = anime.synopsis
-    # TODO: post - print(request.form['rating'])
     return render_template('discover.html', title='Discover', methods=['GET', 'POST'], video_url=video_url, anime_title=anime_title, anime_synopsis=anime_synopsis)
 
 
