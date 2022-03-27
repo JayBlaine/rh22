@@ -5,6 +5,7 @@ from rh22 import app, bcrypt, db, mail
 
 from rh22.forms import UpdateAccountForm, LoginForm, RegistrationForm, ResetPasswordForm, RequestResetForm, ResetHistoryForm
 from rh22.models import User, Anime
+from rh22.utils import get_embedded_video_url
 
 
 @app.route("/")
@@ -87,7 +88,10 @@ def start():
 
 @app.route("/discover")
 def discover():
-    return render_template('discover.html', title='Discover', methods=['GET', 'POST'], video_url='https://www.youtube.com/watch?v=EIVVnLlhzr0')
+    # TODO: get an anime ID from the surprise model
+    anime_id = 37259
+    video_url = get_embedded_video_url(anime_id)
+    return render_template('discover.html', title='Discover', methods=['GET', 'POST'], video_url=video_url)
 
 
 @app.route("/discover/<int:mal_id>")
