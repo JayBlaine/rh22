@@ -16,6 +16,20 @@ h1, h2, h3, h4, h5, h6 {
   color: #cbd5db;
 }
 
+hr {
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 1px;
+}
+
+p1 {
+  font-size: 24px;
+}
+
 .site-header .navbar-nav .nav-link:hover {
   color: #ffffff;
 }
