@@ -15,7 +15,7 @@ def home():
 
 @app.route("/start")
 def start():
-    if current_user.is_authenticated and len(current_user.history) == 0:
+    if current_user.is_authenticated and current_user.history is None:
         return redirect(url_for('discover'))
     return render_template('start.html', title='Get Started')
 
