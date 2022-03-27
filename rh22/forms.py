@@ -16,8 +16,8 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user:
-            raise ValidationError('That email is taken. Please choose a different one.')
-
+            raise ValidationError(
+                'That email is taken. Please choose a different one.')
 
 
 class LoginForm(FlaskForm):
@@ -37,16 +37,23 @@ class UpdateAccountForm(FlaskForm):
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
-                raise ValidationError('That email is taken. Please choose a different one.')
+                raise ValidationError(
+                    'That email is taken. Please choose a different one.')
 
 
 class RequestResetForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Send Email')
 
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError(
+                'There is no account with that email. You must register first.')
+
 
 class ResetPasswordForm(FlaskForm):
     password = StringField('Password', validators=[DataRequired()])
-    confirm_password = StringField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    confirm_password = StringField('Confirm Password', validators=[
+                                   DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
-
