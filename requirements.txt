@@ -2,6 +2,7 @@ flask
 flask_sqlalchemy
 flask_bcrypt
 flask_login
+flask_mail
 email_validator
 mysqlclient
 mal-api
