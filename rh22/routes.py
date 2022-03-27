@@ -11,8 +11,7 @@ from rh22.models import User, Anime
 @app.route("/about")
 @app.route("/home")
 def home():
-    return render_template('home.html')#, global_recommendations=global_recommendations)
-
+    return render_template('home.html')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
