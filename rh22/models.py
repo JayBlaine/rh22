@@ -1,6 +1,7 @@
 from datetime import datetime
-from rh22 import db, login_manager
+from rh22 import db, login_manager, app
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 @login_manager.user_loader
@@ -16,6 +17,21 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.id}')"
+
+    def get_reset_token(self, time_slice=1800) -> str:
+        s = Serializer(app.config['SECRET_KEY'], time_slice)
+        token = s.dumps({'user_id': self.id}).decode('utf-8')
+        return token
+
+    @staticmethod
+    def verify_reset_token(token: str):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return User.query.get(user_id)
+
 
 class Anime(db.Model):
     mal_id = db.Column(db.Integer, primary_key=True)
