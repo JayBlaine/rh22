@@ -3,7 +3,7 @@ from flask_login import login_required, logout_user, login_user, current_user
 from flask_mail import Message
 from rh22 import app, bcrypt, db, mail
 
-from rh22.forms import UpdateAccountForm, LoginForm, RegistrationForm, ResetPasswordForm, RequestResetForm, ResetHistoryForm
+from rh22.forms import UpdateAccountForm, LoginForm, RegistrationForm, ResetPasswordForm, RequestResetForm, ResetHistoryForm, StartForm
 from rh22.models import User
 from rh22.utils import get_embedded_video_url
 from mal import Anime
@@ -82,9 +82,20 @@ def account():
 
 @app.route("/start", methods=['GET', 'POST'])
 def start():
+    form = StartForm()
     if current_user.is_authenticated and isinstance(current_user.history, str):
         return redirect(url_for('discover'))
-    return render_template('start.html', title='Get Started', methods=['GET', 'POST'])
+    elif form.validate_on_submit():
+        genres = []
+        for field in form:
+            if field.name == discover:
+                break
+            if field.data:
+                genres.append(field.name)
+        print(genres)
+        return redirect(url_for('discover'))
+
+    return render_template('start.html', title='Get Started', form=form, methods=['GET', 'POST'])
 
 
 @app.route("/discover")

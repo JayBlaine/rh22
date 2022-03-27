@@ -4,25 +4,51 @@
     <div class="startSearch">
         <label class="startSearch">
     <input type="text" placeholder="Search...">
-            <input type="button">
+            <input type="button" width="50"height="50">
   </label>
+
+
         <div>
-<label class="btn btn-light">
-    <input type="checkbox" class="form-check list-group-item">Comedy
+<label class="btn btn-dark">
+    {{ form.comedy(class="form-check-input") }} {{ form.comedy.label(class="form-check-label") }}
   </label>
-  <label class="btn btn-light">
-    <input type="checkbox" class="form-check list-group-item">Action
+  <label class="btn btn-dark">
+    {{ form.action(class="form-check-input") }} {{ form.action.label(class="form-check-label") }}
+  </label>
+   <label class="btn btn-dark">
+    {{ form.romance(class="form-check-input") }} {{ form.romance.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-dark">
+    {{ form.drama(class="form-check-input") }} {{ form.drama.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-dark">
+    {{ form.fantasy(class="form-check-input") }} {{ form.fantasy.label(class="form-check-label") }}
   </label>
     <div>
-  <label class="btn btn-light">
-    <input type="checkbox" class="form-check list-group-item">Romance
+  <label class="btn btn-dark">
+      {{ form.sports(class="form-check-input") }} {{ form.sports.label(class="form-check-label") }}
   </label>
-  <label class="btn btn-light">
-    <input type="checkbox" class="form-check list-group-item">Adventure
+  <label class="btn btn-dark">
+    {{ form.horror(class="form-check-input") }} {{ form.horror.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-dark">
+    {{ form.slice(class="form-check-input") }} {{ form.slice.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-dark">
+    {{ form.supernatural(class="form-check-input") }} {{ form.supernatural.label(class="form-check-label") }}
+  </label>
+        <label class="btn btn-dark">
+    {{ form.sci(class="form-check-input") }} {{ form.sci.label(class="form-check-label") }}
   </label>
         </div>
+
 </div>
+        <div class="form-group">
+                {{ form.discover(class="btn btn-outline-info bg-steel") }}
+                <small class="text-muted">
+                </small>
     </div>
+</div>
 </div>
 
 

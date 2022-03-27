@@ -61,3 +61,19 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = StringField('Confirm Password', validators=[
                                    DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+
+class StartForm(FlaskForm):
+    comedy = BooleanField("Comedy")
+    action = BooleanField("Action")
+    romance = BooleanField("Romance")
+    drama = BooleanField("Drama")
+    fantasy = BooleanField("Fantasy")
+    sports = BooleanField("Sports")
+    horror = BooleanField("Horror")
+    slice = BooleanField("Slice of Life")
+    supernatural = BooleanField("Supernatural")
+    sci = BooleanField("Sci-fi")
+    discover = SubmitField("Discover")
+
+

@@ -3,7 +3,9 @@ body {
   color: #333333;
   margin-top: 5rem;
 }
-
+#font-black{
+  color: black;
+}
 h1, h2, h3, h4, h5, h6, p1 {
   color: #ffffff;
 }
@@ -14,6 +16,10 @@ h1, h2, h3, h4, h5, h6, p1 {
 
 .site-header .navbar-nav .nav-link {
   color: #e4eaed;
+}
+
+.nav-link1 {
+  color: black;
 }
 
 hr {
