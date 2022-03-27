@@ -27,7 +27,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_pw)
+        user = User(email=form.email.data, password=hashed_pw)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You\'re now able to login.', 'success')
@@ -62,13 +62,11 @@ def logout():
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
-        current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
         flash('Your account has been updated', 'success')
         return redirect(url_for('account'))
     elif request.method == 'GET':
-        form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form)
 
