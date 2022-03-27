@@ -98,17 +98,18 @@ def start():
     return render_template('start.html', title='Get Started', form=form, methods=['GET', 'POST'])
 
 
-@app.route("/discover")
+@app.route("/discover", methods=['GET', 'POST'])
 def discover():
-    # TODO: get an anime ID from the surprise model
+    if request.method == 'POST':
+        # TODO: add to history
+        previous_rating = request.form['rating']
+        # TODO: get next anime ID from the surprise model
     anime_id = 48491
     video_url = get_embedded_video_url(anime_id)
-    # print(db.session.query(Anime).count())
-    # matched_anime = Anime.query.filter_by(mal_id=anime_id).first()
-    # print(matched_anime)
     anime = Anime(anime_id)
     anime_title = anime.title
     anime_synopsis = anime.synopsis
+    # TODO: post - print(request.form['rating'])
     return render_template('discover.html', title='Discover', methods=['GET', 'POST'], video_url=video_url, anime_title=anime_title, anime_synopsis=anime_synopsis)
 
 

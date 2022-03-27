@@ -8,7 +8,13 @@
     <body> {{ anime_synopsis }} </body>
     <h2> Rating </h2>
     <div class="slidecontainer">
-        <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
+
+        <body>
+            <form method="POST" action="discover">
+                <input type="range" min="0" value=5 max="10" name="rating" />
+                <input type="submit" value="Submit" />
+            </form>
+        </body>
     </div>
 </div>
 {% endblock content %}
