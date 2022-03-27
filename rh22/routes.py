@@ -1,3 +1,4 @@
+from sys import stderr
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import login_required, logout_user, login_user, current_user
 from flask_mail import Message
@@ -5,8 +6,10 @@ from rh22 import app, bcrypt, db, mail
 
 from rh22.forms import UpdateAccountForm, LoginForm, RegistrationForm, ResetPasswordForm, RequestResetForm, ResetHistoryForm, StartForm
 from rh22.models import User
-from rh22.utils import get_embedded_video_url
+from rh22.utils import MissingEmbeddedVideoException, get_embedded_video_url
 from mal import Anime
+
+current_anime_id = 0
 
 
 @app.route("/")
@@ -100,16 +103,23 @@ def start():
 
 @app.route("/discover", methods=['GET', 'POST'])
 def discover():
-    anime_id = 48491
+    global current_anime_id
     if request.method == 'POST':
         # Add to user history
         user = User.query.filter_by(email=current_user.email).first()
         print(user.get_history())
         previous_rating = request.form['rating']
-        user.add_history(anime_id, previous_rating)
+        user.add_history(current_anime_id, previous_rating)
+    while (True):
         # TODO: get next anime ID from the surprise model
-    video_url = get_embedded_video_url(anime_id)
-    anime = Anime(anime_id)
+        current_anime_id += 1
+        try:
+            video_url = get_embedded_video_url(current_anime_id)
+            break
+        except MissingEmbeddedVideoException:
+            print(
+                f'Could not get embedded video for {current_anime_id}, skipping it', file=stderr)
+    anime = Anime(current_anime_id)
     anime_title = anime.title
     anime_synopsis = anime.synopsis
     return render_template('discover.html', title='Discover', methods=['GET', 'POST'], video_url=video_url, anime_title=anime_title, anime_synopsis=anime_synopsis)
