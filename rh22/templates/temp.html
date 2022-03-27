@@ -1,27 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    {% if title %}
+        <title>AniFind - {{ title }}</title>
+    {% else %}
+        <title>Anifind</title>
+    {% endif %}
+</head>
+<body class="en" data-new-gr-c-s-check-loaded="14.1054.0" data-gr-ext-installed="">
+	<div id="wrap">
+
+
+<!-- header -->
 <div id="header">
 	<div class="header_inner">
-		<h1 class="logo"><a href="https://www.webtoons.com/en/" class="btn_logo N=a:gnb.home,g:en_en">WEBTOON</a></h1>
+		<h1 class="logo"><a {{ url_for('home') }} class="btn_logo N=a:gnb.home,g:en_en">AniFind</a></h1>
 	<div class="sta">
-
-			<!-- [D] creators hub 라벨 -->
-			<span class="lk_creators on"><a href="https://www.webtoons.com/en/creators101/webtoon-canvas" class="N=a:gnb.creators,g:en_en">Creators 101</a></span>
-
-
-			<a href="#" class="lk_publish N=a:gnb.publish,g:en_en" id="btnPublish">Publish</a>
-
-
-		<a href="#" class="lk_login" id="btnLogin">Log In</a>
+			<!-- [D] account management -->
+            {% if current_user.is_authenticated  %}
+		    <a href="{{ url_for('account') }}" class="lk_login" id="btnLogin">Account</a>
+		    {% else %}
+		    <a href="{{ url_for('login') }}" class="lk_publish N=a:gnb.publish,g:en_en" id="btnPublish">Log In</a>
+		    <a href="{{ url_for('register') }}" class="lk_login" id="btnLogin">Register</a>
+            {% endif %}
 
 		<span class="login N=a:gnb.mywebtoon,g:en_en" id="btnLoginInfo" style="display: none;"></span>
 
 		<div class="ly_loginbox NE=a:log" id="layerMy">
 			<div class="ico_arr v4 up"></div>
 
-			<a href="#" title="Close" class="btn_clse _btnClose">Close the Login window</a>
 		</div>
 
-		<span class="bar">|</span>
-		<a href="#" class="btn_search _btnSearch N=a:gnb.search,g:en_en">Search</a>
 
 		<div class="search_area _searchArea NE=a:sch" style="display:none">
 			<span class="input_box"><input type="text" class="input_search _txtKeyword"></span>
@@ -40,23 +58,28 @@
 		</div>
 	</div>
 	<p class="blind">MENU</p>
-
 	<ul class="lnb NE=a:gnb">
-		<li class="m01 "><a href="https://www.webtoons.com/en/dailySchedule" class="NPI=a:daily,g:en_en">ORIGINALS</a>
+       {% if current_user.is_authenticated and current_user.history is string %}
+		<li class="m01 on">
+			<a href="{{ url_for('start') }}" class="NPI=a:daily,g:en_en">
+				<h>START</h>
+			</a>
 		</li>
-		<li class="m02 "><a href="https://www.webtoons.com/en/genre" class="NPI=a:genre,g:en_en">GENRES</a></li>
-		<li class="m03 "><a href="https://www.webtoons.com/en/top" class="NPI=a:toprated,g:en_en">POPULAR</a></li>
-
-			<li class="m04 ">
-				<a href="https://www.webtoons.com/en/challenge" class="NPI=a:league,g:en_en">CANVAS
-
-				</a>
-			</li>
-
-
-
+        {% endif %}
+		<li class="m02">
+			<a href="{{ url_for('discover') }}" class="NPI=a:genre,g:en_en">
+				<h>DISCOVER</h>
+			</a>
+		</li>
+		<li class="m03">
+			<a href="{{ url_for('home') }}" class="NPI=a:toprated,g:en_en">
+				<h>ABOUT</h>
+			</a>
+		</li>
 	</ul>
-
 	<div id="appleid-signin" data-color="black" data-border="true" data-type="sign in" hidden=""></div>
 </div>
 </div>
+<!-- //header -->
+</body>
+</html>

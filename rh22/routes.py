@@ -76,7 +76,7 @@ def account():
     return render_template('account.html', title='Account', form1=form1, form2=form2, history=history2)
 
 
-@app.route("/start")
+@app.route("/start", methods=['GET', 'POST'])
 def start():
     if current_user.is_authenticated and isinstance(current_user.history, str):
         return redirect(url_for('discover'))

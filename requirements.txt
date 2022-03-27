@@ -6,3 +6,4 @@ flask_mail
 email_validator
 mysqlclient
 mal-api
+itsdangerous==1.1
