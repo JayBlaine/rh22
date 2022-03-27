@@ -1,4 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
+<div>
+  <h3> About Anifind </h3>
 
+  <body>
+    Anifind is an easy to use recommendation tool to find relevant anime videos developed by Jarrod Ragsdale, Dylan
+    Manuel, Andrew Seong, and Xi Tang.</body>
+</div>
+<div>
+  <h3> Features </h3>
+
+  <body> Our website contains hundreds of anime videos ranging from various different categories over a span of many
+    years, guaranteed for each user's liking. Anyone may create an account with a username and password associated with
+    an email. Each page contains an embedded anime thumbnail, a synopsis, and allows the user to rate the video to
+    his/her liking, improving the recommendation machine learning model.</body>
+</div>
+<div>
+  <h3> Technical Aspects </h3>
+
+  <body> A dataset of popular anime videos was stored in a Google Cloud SQL database, using encrypted keys, and a mail
+    server. We built a recommendation
+    prediction model using <code>surprise</code>, using previously recorded ratings of the anime videos as a baseline
+    for our machine learning model combined with the user's history and rating of previous videos to recommend the user
+    his/her next anime video to view.</body>
+</div>
 {% endblock content %}
