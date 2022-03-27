@@ -75,7 +75,7 @@ def post(mal_id):
     anime = Anime.query.get_or_404(mal_id)
     return render_template('discover.html', title=post.title, post=post)
 
-def send_reset_email(user):
+def send_reset_email(user: User):
     token = user.get_reset_token()
     msg = Message('Password Reset Request',
                   sender='noreply@demo.com',
