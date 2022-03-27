@@ -16,59 +16,46 @@
         <title>Anifind</title>
     {% endif %}
 </head>
-<body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">Anifind</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('home') }}">About</a>
-                {% if current_user.is_authenticated and current_user.history is string %}
-                <a class="nav-item nav-link" href="{{ url_for('discover') }}">Discover</a>
-                {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('start') }}">Get started</a>
-                {% endif %}
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-                {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
-                {% else %}
-              <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-              <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
-                {% endif %}
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                  {{ message }}
-                </div>
-              {% endfor %}
+<body class="en" data-new-gr-c-s-check-loaded="14.1054.0" data-gr-ext-installed="">
+	<div id="wrap">
+<!-- header -->
+<div id="header">
+	<div class="header_inner">
+		<h1 class="logo"><a {{ url_for('home') }} class="btn_logo N=a:gnb.home,g:en_en">AniFind</a></h1>
+	<div class="sta">
+			<!-- [D] account management -->
+            {% if current_user.is_authenticated  %}
+		    <a href="{{ url_for('account') }}" class="lk_login" id="btnLogin">Account</a>
+		    {% else %}
+		    <a href="{{ url_for('login') }}" class="lk_publish N=a:gnb.publish,g:en_en" id="btnPublish">Log In</a>
+		    <a href="{{ url_for('register') }}" class="lk_login" id="btnLogin">Register</a>
             {% endif %}
-          {% endwith %}
-          {% block content %}{% endblock %}
-        </div>
-      </div>
-    </main>
 
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<span class="login N=a:gnb.mywebtoon,g:en_en" id="btnLoginInfo" style="display: none;"></span>
+	</div>
+	<p class="blind">MENU</p>
+	<ul class="lnb NE=a:gnb">
+       {% if current_user.is_authenticated and current_user.history is string %}
+		<li class="m01 on">
+			<a href="{{ url_for('start') }}" class="NPI=a:daily,g:en_en">
+				<h>START</h>
+			</a>
+		</li>
+        {% endif %}
+		<li class="m02">
+			<a href="{{ url_for('discover') }}" class="NPI=a:genre,g:en_en">
+				<h>DISCOVER</h>
+			</a>
+		</li>
+		<li class="m03">
+			<a href="{{ url_for('home') }}" class="NPI=a:toprated,g:en_en">
+				<h>ABOUT</h>
+			</a>
+		</li>
+	</ul>
+	<div id="appleid-signin" data-color="black" data-border="true" data-type="sign in" hidden=""></div>
+</div>
+</div>
+<!-- //header -->
 </body>
 </html>
