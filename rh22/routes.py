@@ -13,13 +13,15 @@ from rh22.models import User, Anime
 def home():
     return render_template('home.html')
 
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        hashed_pw = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
         user = User(email=form.email.data, password=hashed_pw)
         db.session.add(user)
         db.session.commit()
@@ -85,13 +87,14 @@ def start():
 
 @app.route("/discover")
 def discover():
-    return render_template('discover.html', title='Discover', methods=['GET', 'POST'])
+    return render_template('discover.html', title='Discover', methods=['GET', 'POST'], video_url='https://www.youtube.com/watch?v=EIVVnLlhzr0')
 
 
 @app.route("/discover/<int:mal_id>")
 def mal_page(mal_id):
     anime = Anime.query.get_or_404(mal_id)
     return render_template('discover.html', title=anime.title, anime=anime)
+
 
 def send_reset_email(user: User):
     token = user.get_reset_token()
@@ -128,12 +131,15 @@ def reset_token(token):
         return redirect(url_for('reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
         user.password = hashed_password
         db.session.commit()
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+
 '''
 @app.route("/<int:anime_id>")
 def anime(anime_id):
