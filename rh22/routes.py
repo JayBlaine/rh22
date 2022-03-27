@@ -4,8 +4,9 @@ from flask_mail import Message
 from rh22 import app, bcrypt, db, mail
 
 from rh22.forms import UpdateAccountForm, LoginForm, RegistrationForm, ResetPasswordForm, RequestResetForm, ResetHistoryForm
-from rh22.models import User, Anime
+from rh22.models import User
 from rh22.utils import get_embedded_video_url
+from mal import Anime
 
 
 @app.route("/")
@@ -89,9 +90,15 @@ def start():
 @app.route("/discover")
 def discover():
     # TODO: get an anime ID from the surprise model
-    anime_id = 37259
+    anime_id = 48491
     video_url = get_embedded_video_url(anime_id)
-    return render_template('discover.html', title='Discover', methods=['GET', 'POST'], video_url=video_url)
+    # print(db.session.query(Anime).count())
+    # matched_anime = Anime.query.filter_by(mal_id=anime_id).first()
+    # print(matched_anime)
+    anime = Anime(anime_id)
+    anime_title = anime.title
+    anime_synopsis = anime.synopsis
+    return render_template('discover.html', title='Discover', methods=['GET', 'POST'], video_url=video_url, anime_title=anime_title, anime_synopsis=anime_synopsis)
 
 
 @app.route("/discover/<int:mal_id>")

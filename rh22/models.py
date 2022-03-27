@@ -31,14 +31,3 @@ class User(db.Model, UserMixin):
         except:
             return None
         return User.query.get(user_id)
-
-
-class Anime(db.Model):
-    mal_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.VARCHAR(300), nullable=False)
-    score = db.Column(db.Float(precision=3.2))
-    genre = db.Column(db.VARCHAR(300), nullable=False)
-    synopsis = db.Column(db.VARCHAR(1500), nullable=False)
-
-    def __repr__(self) -> str:
-        return f"Anime({self.mal_id}, '{self.title}', {self.score}, '{self.genre}', '{self.synopsis}')"
